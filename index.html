@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TO-DO List</title>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="index.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="shortcut icon" href="images/favicon.ico" />
+
+    <meta name="description" content="Realiser des To do list en ligne simplement, facilement et gratuitement !" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="toDoList |" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="toDoList" />
+    <meta property="og:description" content="Realiser des To do list en ligne simplement, facilement et gratuitement !" />
+    <meta property="article:published_time" content="2022-02-11T13:56:45+00:00" />
+    <meta property="article:modified_time" content="2022-02-11T08:00:19+00:00" />
+    <meta name="twitter:card" content="toDoList" />
+    <meta name="twitter:domain" content="toDoList.fr" />
+    <meta name="twitter:title" content="toDoList" />
+    <meta name="twitter:description" content="Realiser des To do list en ligne simplement, facilement et gratuitement !" />
+</head>
+
+<body>
+    <div id="intro">
+        Created By <br>SamToche
+    </div>
+    <center>
+        <h1>Mes TO-DO List</h1>
+    </center>
+    <div id="main" ontouchstart="document.querySelector('textarea').style.opacity=.5">
+    </div>
+    <div onmousedown="pr(event)" ontouchstart="document.querySelector('textarea').style.opacity=1" id="add" onclick="if(document.querySelector('textarea').value!==''){p();document.querySelector('textarea').value=''}else{return false}"></div>
+    <textarea ontouchstart="document.querySelector('textarea').style.opacity=1" placeholder="Type Here"></textarea>
+    <script type="text/javascript">
+        setTimeout(
+            () => {
+                document.getElementById("intro").style.transform = "scale(10,10)"
+                document.getElementById("intro").style.opacity = 0
+                setTimeout(() => {
+                    document.getElementById("intro").style.display = "none"
+                }, 600)
+            }, 1000)
+        window.addEventListener("touchstart", (event) => {
+            //event.preventDefault()
+            event.stopPropagation()
+        })
+
+        function pr(event) {
+            event.preventDefault()
+            event.stopPropagation()
+        }
+        setInterval(
+            () => {
+                if (!window.navigator.onLine) {
+                    document.querySelector("h1").innerHTML = "No internet\nReload"
+                } else {
+                    document.querySelector("h1").innerHTML = "Mes TO-DO List"
+                }
+            })
+        let k = 0
+
+        function p() {
+            k += 1
+            let ep = document.createElement("div")
+            ep.setAttribute("id", "ep")
+            let i = document.createElement("span")
+            i.innerHTML = k
+            let a = document.createElement("input")
+            let b = document.createElement("label")
+            let c = document.createElement("select")
+            let e = document.createElement("br")
+            a.type = "checkbox"
+            b.innerHTML = document.querySelector("textarea").value
+            document.querySelector("#main").appendChild(ep)
+            ep.appendChild(i)
+            ep.appendChild(a)
+            ep.appendChild(b)
+            ep.appendChild(c)
+            for (i = 1; i < 60; i++) {
+                let d = document.createElement("option")
+                c.appendChild(d)
+                d.innerHTML = i / 4
+            }
+            ep.appendChild(e)
+            ep.ontouchmove = function(e) {
+                ep.style.transition = "margin-left .5s, opacity 1s";
+                let x = e.touches[0].clientX - 100
+                ep.style.marginLeft = x + "px"
+                if (x > window.innerWidth / 1.4) {
+                    x = window.innerWidth / 1.4
+                    ep.style.marginLeft = x + "px"
+                    ep.style.opacity = 0;
+                    setTimeout(() => {
+                        document.querySelector("#main").removeChild(this)
+                    }, 1000)
+                }
+                ep.ontouchend = () => {
+                    x = 0
+                    ep.style.marginLeft = x + "px"
+                }
+                if (x < 0) {
+                    x = 0
+                    ep.style.marginLeft = x + "px"
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
